@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PIXEL_OS // AUDIO_DUMP</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #00ff00;
+            font-family: monospace;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .warning {
+            color: #ff3333;
+            font-weight: bold;
+        }
+
+        .box {
+            border: 1px solid #00ff00;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        audio {
+            margin-top: 15px;
+            width: 100%;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>[ SYSTEM ALERT: COMMS LINK SEVERED ]</h2>
+    <p class="warning">WARNING: The remote audio stream was violently interrupted.</p>
+
+    <div class="box">
+        <p><strong>Pixel's Note:</strong></p>
+        <p>I lost the live connection, but I managed to dump the raw audio buffer before the socket closed.</p>
+        <p>I've saved it here as <strong>beacon-signal.wav</strong>. You will need to listen closely to decipher the
+            sequence hidden in the static. It sounds like some kind of rhythmic tapping...</p>
+
+        <audio controls>
+            <source src="beacon-signal.wav" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <!-- The beacon speaks in dots and dashes.
+     Not all languages use letters at first glance. -->
+
+    <p style="margin-top: 30px;"><a href="/" style="color: #aaa; text-decoration: none;">&lt; Return to Main
+            Terminal</a></p>
+</body>
+
+</html>
