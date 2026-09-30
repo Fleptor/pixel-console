@@ -1,0 +1,66 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #0a0a0a;
+    color: #00ff00; /* Classic Terminal Green */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    overflow: hidden; /* Prevents whole page scrolling */
+}
+
+/* The CRT Scanline Effect */
+.scanlines {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    pointer-events: none; /* Lets you click through the effect */
+    z-index: 100;
+}
+
+#terminal {
+    padding: 20px;
+    height: 90vh;
+    overflow-y: auto; /* Scroll inside the terminal */
+    display: flex;
+    flex-direction: column;
+}
+
+#output p {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.error {
+    color: #ff3333;
+    font-weight: bold;
+}
+
+.highlight {
+    color: #ffb000; /* Amber for clues */
+}
+
+#input-line {
+    display: flex;
+    margin-top: 10px;
+}
+
+#prompt {
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+#cmd-input {
+    background: transparent;
+    border: none;
+    color: #00ff00;
+    font-family: inherit;
+    font-size: inherit;
+    flex-grow: 1;
+    outline: none;
+}
+
+#cmd-input:focus {
+    outline: none;
+}
