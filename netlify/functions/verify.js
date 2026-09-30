@@ -1,4 +1,8 @@
-const ALLOWED_ORIGIN = 'https://belalhamdan.com';
+const ALLOWED_ORIGINS = new Set([
+    'https://belalhamdan.com',
+    'https://pixel.belalhamdan.com',
+    'https://rainbow-caramel-bcc9e2.netlify.app'
+]);
 
 exports.handler = async event => {
     const origin = event.headers?.origin || event.headers?.Origin;
@@ -6,12 +10,12 @@ exports.handler = async event => {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-store',
         'Vary': 'Origin',
-        'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+        'Access-Control-Allow-Origin': ALLOWED_ORIGINS.has(origin) ? origin : 'https://belalhamdan.com',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type'
     };
     const reply = (statusCode, body) => ({ statusCode, headers, body: JSON.stringify(body) });
-    if (origin && origin !== ALLOWED_ORIGIN) return reply(403, { error: 'Origin not allowed' });
+    if (origin && !ALLOWED_ORIGINS.has(origin)) return reply(403, { error: 'Origin not allowed' });
     if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers, body: '' };
     if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed' });
 

@@ -56,6 +56,19 @@ test('CORS preflight and method restrictions', async () => {
     assert.equal(denied.statusCode, 403);
 });
 
+test('both custom domains and the Netlify fallback can verify submissions', async () => {
+    for (const origin of ['https://belalhamdan.com', 'https://pixel.belalhamdan.com', 'https://rainbow-caramel-bcc9e2.netlify.app']) {
+        const request = { ...event({ action: 'verify', frags: fixtures }), headers: { origin } };
+        const preflight = await handler({ ...request, httpMethod: 'OPTIONS' });
+        assert.equal(preflight.statusCode, 204);
+        assert.equal(preflight.headers['Access-Control-Allow-Origin'], origin);
+        const response = await handler(request);
+        assert.equal(response.statusCode, 200);
+        assert.equal(response.headers['Access-Control-Allow-Origin'], origin);
+        assert.equal(JSON.parse(response.body).success, true);
+    }
+});
+
 test('missing or malformed server configuration fails closed', async () => {
     const saved = process.env.PIXEL_EXPECTED_FRAGMENTS;
     try {

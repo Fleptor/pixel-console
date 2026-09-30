@@ -6,6 +6,11 @@ The console is published at https://belalhamdan.com/pixel-console/ by the
 GitHub Pages workflow. Only the public HTML, CSS, JavaScript, and audio are
 included in the Pages artifact.
 
+The same frontend is also deployed on the Netlify project
+`rainbow-caramel-bcc9e2`, assigned to `pixel.belalhamdan.com`. Its DNS requires
+a `pixel` CNAME pointing to `rainbow-caramel-bcc9e2.netlify.app` at the domain's
+authoritative DNS provider. Both frontends use the separate verifier service.
+
 Players recover four fragments from the diagnostic archive and use
 `submit [frag1] [frag2] [frag3] [frag4]`. No terminal login is required.
 The editable role cookie is an intentional puzzle mechanic. The `admin_token`
@@ -23,7 +28,8 @@ The function handles `POST` requests with either
 `{ "action": "verify", "frags": [...] }` or
 `{ "action": "admin_token", "role": "..." }`. Verification returns only
 boolean checks and overall success. Fragment disclosure requires the puzzle's
-admin role. Browser requests are allowed from `https://belalhamdan.com`.
+admin role. Browser requests are allowed from `https://belalhamdan.com`,
+`https://pixel.belalhamdan.com`, and the frontend's Netlify fallback domain.
 
 Run backend checks with `node --test tests/verify.test.cjs`. Tests use synthetic
 fixtures, never the real puzzle answers.
@@ -31,9 +37,19 @@ fixtures, never the real puzzle answers.
 Deploy backend changes from this directory with:
 
 ```sh
-netlify deploy --site pixel-console-verifier --prod --no-build --context production
+netlify deploy --site pixel-console-verifier --prod --no-build
 ```
 
 Deploy the backend before pushing dependent frontend changes to `main`.
 Environment-variable changes also require a new backend deploy. GitHub Pages
 publishes the frontend automatically on pushes to `main`.
+
+Deploy the same public files to the Netlify frontend with:
+
+```sh
+sh scripts/deploy-netlify-frontend.sh
+```
+
+This stages only the public assets and keeps function source and tests out of
+the frontend deploy. The Netlify frontend uses the separate verifier project;
+it does not need its own copy of the answer environment variable.
